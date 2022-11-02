@@ -29,17 +29,4 @@ class EventModel extends \CodeIgniter\Model
 
         return $event;
     }
-
-    public function findEventByEventName(string $eventName)
-    {
-        $event = $this
-            ->asArray()
-            ->where(['event_name' => $eventName])
-            ->first();
-
-        if (!$event)
-            throw new Exception('Event does not exist for specified event name');
-
-        return $event;
-    }
 }

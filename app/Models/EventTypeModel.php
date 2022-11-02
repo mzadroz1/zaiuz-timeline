@@ -24,17 +24,4 @@ class EventTypeModel extends \CodeIgniter\Model
 
         return $eventType;
     }
-
-    public function findEventTypeByEventTypeName(string $eventTypeName)
-    {
-        $eventType = $this
-            ->asArray()
-            ->where(['event_type_name' => $eventTypeName])
-            ->first();
-
-        if (!$eventType)
-            throw new Exception('Event type does not exist for specified event type name');
-
-        return $eventType;
-    }
 }

@@ -47,12 +47,10 @@ class Events extends BaseController
                 );
         }
 
-        $event_name = $input['event_name'];
-
         $model = new EventModel;
         $model->save($input);
 
-        $event = $model->findEventByEventName($event_name);
+        $event = $model->findEventById($model->getInsertID());
 
         return $this->getResponse(
             [

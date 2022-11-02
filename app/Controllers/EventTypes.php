@@ -34,12 +34,10 @@ class EventTypes extends BaseController
                 );
         }
 
-        $eventTypeName = $input['event_type_name'];
-
         $model = new EventTypeModel;
         $model->save($input);
 
-        $eventType = $model->findEventTypeByEventTypeName($eventTypeName);
+        $eventType = $model->findEventTypeById($model->getInsertID());
 
         return $this->getResponse(
             [
