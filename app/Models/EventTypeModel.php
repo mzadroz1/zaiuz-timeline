@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Exception;
+
 class EventTypeModel extends \CodeIgniter\Model
 {
     protected $table = 'event_type';
