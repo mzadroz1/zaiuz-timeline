@@ -25,12 +25,15 @@ class Events extends BaseController
             'event_end_date' => 'required|validateEventEndDate[event_start_date, event_end_date]',
             'short_description' => 'required',
             'description' => 'required',
-            'event_type_id' => 'required',
+            'event_type_id' => 'required|validateEventType[event_type_id]',
         ];
 
         $errors = [
             'event_end_date' => [
                 'validateEventEndDate' => 'Event end date has to be later or equal to the event start date'
+            ],
+            'event_type_id' => [
+                'validateEventType' => 'Event type with specified id does not exist'
             ]
         ];
 
