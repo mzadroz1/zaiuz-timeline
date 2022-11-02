@@ -32,15 +32,14 @@ function getSignedJWTForUser(string $username)
         'exp' => $tokenExpiration,
     ];
 
-    $jwt = JWT::encode($payload, getSecretKey(), 'HS256');
-    return $jwt;
+    return JWT::encode($payload, getSecretKey(), 'HS256');
 }
 
 function getJwtTimeToLive()
 {
-    return getenv('JWT_TIME_TO_LIVE');
+    return 3600;
 }
 
 function getSecretKey(){
-    return getenv('JWT_SECRET_KEY');
+    return 'kzUf4sxss4AeG5uHkNZAqT1Nyi1zVfpz';
 }
