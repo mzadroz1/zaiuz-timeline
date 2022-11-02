@@ -117,8 +117,8 @@ class Events extends BaseController
         try {
 
             $model = new EventModel;
-            $event = $model->findEventById($id);
-            $model->delete($event);
+            $model->findEventById($id);
+            $model->delete($id);
 
             return $this
                 ->getResponse(

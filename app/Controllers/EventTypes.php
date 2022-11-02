@@ -107,8 +107,8 @@ class EventTypes extends BaseController
         try {
 
             $model = new EventTypeModel;
-            $eventType = $model->findEventTypeById($id);
-            $model->delete($eventType);
+            $model->findEventTypeById($id);
+            $model->delete($id);
 
             return $this
                 ->getResponse(
