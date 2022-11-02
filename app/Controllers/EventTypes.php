@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\EventTypeModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use Exception;
 
 class EventTypes extends BaseController
 {
