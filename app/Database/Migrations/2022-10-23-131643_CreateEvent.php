@@ -36,6 +36,7 @@ class CreateEvent extends Migration
             'img_url' => [
                 'type' => 'VARCHAR',
                 'constraint' => '256',
+                'null' => true
             ],
             'event_type_id' => [
                 'type' => 'INT',
