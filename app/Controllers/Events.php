@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\EventModel;
+use App\Validation\EventRules;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
@@ -19,27 +20,9 @@ class Events extends BaseController
 
     public function store()
     {
-        $rules = [
-            'event_name' => 'required',
-            'event_start_date' => 'required',
-            'event_end_date' => 'required|validateEventEndDate[event_start_date, event_end_date]',
-            'short_description' => 'required',
-            'description' => 'required',
-            'event_type_id' => 'required|validateEventType[event_type_id]',
-        ];
-
-        $errors = [
-            'event_end_date' => [
-                'validateEventEndDate' => 'Event end date has to be later or equal to the event start date'
-            ],
-            'event_type_id' => [
-                'validateEventType' => 'Event type with specified id does not exist'
-            ]
-        ];
-
         $input = $this->getRequestInput($this->request);
 
-        if (!$this->validateRequest($input, $rules, $errors)) {
+        if (!$this->validateRequest($input, EventRules::getEventRules(), EventRules::getEventValidationErrorMessages())) {
             return $this
                 ->getResponse(
                     $this->validator->getErrors(),
@@ -91,6 +74,14 @@ class Events extends BaseController
             $model->findEventById($id);
 
             $input = $this->getRequestInput($this->request);
+
+            if (!$this->validateRequest($input, EventRules::getEventRules(), EventRules::getEventValidationErrorMessages())) {
+                return $this
+                    ->getResponse(
+                        $this->validator->getErrors(),
+                        ResponseInterface::HTTP_BAD_REQUEST
+                    );
+            }
 
             $model->update($id, $input);
             $event = $model->findEventById($id);

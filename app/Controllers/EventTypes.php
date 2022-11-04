@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\EventTypeModel;
+use App\Validation\EventRules;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
@@ -19,14 +20,9 @@ class EventTypes extends BaseController
 
     public function store()
     {
-        $rules = [
-            'event_type_name' => 'required|is_unique[event_type.event_type_name]',
-            'color' => 'required|is_unique[event_type.color]',
-        ];
-
         $input = $this->getRequestInput($this->request);
 
-        if (!$this->validateRequest($input, $rules)) {
+        if (!$this->validateRequest($input, EventRules::getEventTypeRules())) {
             return $this
                 ->getResponse(
                     $this->validator->getErrors(),
@@ -78,6 +74,14 @@ class EventTypes extends BaseController
             $model->findEventTypeById($id);
 
             $input = $this->getRequestInput($this->request);
+
+            if (!$this->validateRequest($input, EventRules::getEventTypeRules())) {
+                return $this
+                    ->getResponse(
+                        $this->validator->getErrors(),
+                        ResponseInterface::HTTP_BAD_REQUEST
+                    );
+            }
 
             $model->update($id, $input);
             $eventType = $model->findEventTypeById($id);
