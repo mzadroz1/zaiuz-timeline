@@ -4,6 +4,9 @@ use App\Models\UserModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+const JWT_TIME_TO_LIVE = 3600;
+const JWT_SECRET_KEY = 'kzUf4sxss4AeG5uHkNZAqT1Nyi1zVfpz';
+
 function getJWTFromRequest($authenticationHeader): string
 {
     if (is_null($authenticationHeader)) { //JWT is absent
@@ -37,9 +40,9 @@ function getSignedJWTForUser(string $username)
 
 function getJwtTimeToLive()
 {
-    return 3600;
+    return JWT_TIME_TO_LIVE;
 }
 
 function getSecretKey(){
-    return 'kzUf4sxss4AeG5uHkNZAqT1Nyi1zVfpz';
+    return JWT_SECRET_KEY;
 }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Validation\AuthenticationRules;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
@@ -11,13 +12,8 @@ class Auth extends BaseController
 
     public function register()
     {
-        $rules = [
-            'username' => 'required|min_length[6]|max_length[50]|is_unique[user.username]',
-            'password' => 'required|min_length[8]|max_length[255]'
-        ];
-
         $input = $this->getRequestInput($this->request);
-        if (!$this->validateRequest($input, $rules)) {
+        if (!$this->validateRequest($input, AuthenticationRules::getRegistrationRules())) {
             return $this
                 ->getResponse(
                     $this->validator->getErrors(),
@@ -38,21 +34,10 @@ class Auth extends BaseController
 
     public function login()
     {
-        $rules = [
-            'username' => 'required|min_length[6]|max_length[50]',
-            'password' => 'required|min_length[8]|max_length[255]|validateUser[username, password]'
-        ];
-
-        $errors = [
-            'password' => [
-                'validateUser' => 'Invalid login credentials provided'
-            ]
-        ];
-
         $input = $this->getRequestInput($this->request);
 
 
-        if (!$this->validateRequest($input, $rules, $errors)) {
+        if (!$this->validateRequest($input, AuthenticationRules::getLoginRules(), AuthenticationRules::getLoginValidationErrorMessages())) {
             return $this
                 ->getResponse(
                     $this->validator->getErrors(),
