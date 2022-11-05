@@ -75,14 +75,6 @@ class EventTypes extends BaseController
 
             $input = $this->getRequestInput($this->request);
 
-            if (!$this->validateRequest($input, EventRules::getEventTypeRules())) {
-                return $this
-                    ->getResponse(
-                        $this->validator->getErrors(),
-                        ResponseInterface::HTTP_BAD_REQUEST
-                    );
-            }
-
             $model->update($id, $input);
             $eventType = $model->findEventTypeById($id);
 
