@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\Cors;
 use App\Filters\JwtFilter;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
@@ -24,7 +25,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'auth' => JwtFilter::class
+        'auth' => JwtFilter::class,
+        'cors' => Cors::class
     ];
 
     /**
@@ -38,6 +40,7 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'cors'
         ],
         'after' => [
             'toolbar',
