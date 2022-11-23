@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\EventModel;
 use App\Models\EventTypeModel;
 use App\Validation\EventRules;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -100,6 +101,10 @@ class EventTypes extends BaseController
     {
         try {
 
+            $eventModel = new EventModel;
+            if($eventModel->isThereEventWithEventTypeId($id)) {
+                throw new Exception("Cannot delete event type when there are events using this type!");
+            }
             $model = new EventTypeModel;
             $model->findEventTypeById($id);
             $model->delete($id);

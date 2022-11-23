@@ -29,4 +29,17 @@ class EventModel extends \CodeIgniter\Model
 
         return $event;
     }
+
+    public function isThereEventWithEventTypeId(string $eventTypeId): bool
+    {
+        $event = $this
+            ->asArray()
+            ->where(['event_type_id' => $eventTypeId])
+            ->first();
+
+        if (!$event)
+            return false;
+        else
+            return true;
+    }
 }
